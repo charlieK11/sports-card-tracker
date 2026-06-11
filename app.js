@@ -29,9 +29,8 @@ class SportsCardTracker {
     // Capitalize first letter of each word
     capitalizeWords(text) {
         return text
-            .toLowerCase()
             .split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
             .join(' ');
     }
 
@@ -56,8 +55,10 @@ class SportsCardTracker {
         // Capitalize card name as you type
         const cardNameInput = document.getElementById('card-name');
         if (cardNameInput) {
-            cardNameInput.addEventListener('blur', (e) => {
+            cardNameInput.addEventListener('input', (e) => {
+                const cursorPos = e.target.selectionStart;
                 e.target.value = this.capitalizeWords(e.target.value);
+                e.target.setSelectionRange(cursorPos, cursorPos);
             });
         }
 
