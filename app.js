@@ -7,7 +7,6 @@ class SportsCardTracker {
         this.currentCardForSale = null;
         this.loadData();
         this.initializeEventListeners();
-        this.setTodayDate();
         this.displayCards();
         this.updateStats();
     }
@@ -52,14 +51,6 @@ class SportsCardTracker {
         document.getElementById('sell-form').addEventListener('submit', (e) => this.confirmSale(e));
     }
 
-    // Set today's date as default
-    setTodayDate() {
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('purchase-date').valueAsDate = new Date();
-        document.getElementById('purchase-date').value = today;
-        document.getElementById('sell-date').value = today;
-    }
-
     // Tab Switching
     switchTab(tabName) {
         // Hide all tabs
@@ -87,10 +78,8 @@ class SportsCardTracker {
             id: Date.now(),
             cardName: document.getElementById('player-name').value,
             purchasePrice: parseFloat(document.getElementById('purchase-price').value),
-            purchaseDate: document.getElementById('purchase-date').value,
             status: 'owned',
-            salePrice: null,
-            saleDate: null
+            salePrice: null
         };
 
         this.cards.push(card);
@@ -98,7 +87,6 @@ class SportsCardTracker {
 
         // Reset form
         document.getElementById('add-card-form').reset();
-        this.setTodayDate();
 
         // Show confirmation
         alert('Card added successfully!');
@@ -135,7 +123,7 @@ class SportsCardTracker {
                 const profitText = profit >= 0 ? '+' : '';
                 profitLossHTML = `
                     <div class="detail-row">
-                        <span class="detail-label">Sale Price:</span>
+                        <span class="detail-label">Sold For:</span>
                         <span class="detail-value">$${card.salePrice.toFixed(2)}</span>
                     </div>
                     <div class="detail-row">
@@ -154,20 +142,10 @@ class SportsCardTracker {
                 </div>
                 <div class="card-details">
                     <div class="detail-row">
-                        <span class="detail-label">Purchase Price:</span>
+                        <span class="detail-label">Paid:</span>
                         <span class="detail-value">$${card.purchasePrice.toFixed(2)}</span>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Purchased:</span>
-                        <span class="detail-value">${new Date(card.purchaseDate).toLocaleDateString()}</span>
-                    </div>
                     ${profitLossHTML}
-                    ${card.status === 'sold' ? `
-                        <div class="detail-row">
-                            <span class="detail-label">Sold:</span>
-                            <span class="detail-value">${new Date(card.saleDate).toLocaleDateString()}</span>
-                        </div>
-                    ` : ''}
                     <span class="status-badge ${statusClass}">${statusText}</span>
                 </div>
                 <div class="card-actions">
@@ -210,13 +188,11 @@ class SportsCardTracker {
         if (!this.currentCardForSale) return;
 
         const salePrice = parseFloat(document.getElementById('sell-price').value);
-        const saleDate = document.getElementById('sell-date').value;
 
         const card = this.cards.find(c => c.id === this.currentCardForSale.id);
         if (card) {
             card.status = 'sold';
             card.salePrice = salePrice;
-            card.saleDate = saleDate;
             this.saveData();
         }
 
