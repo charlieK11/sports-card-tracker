@@ -26,6 +26,15 @@ class SportsCardTracker {
         console.log('Saved cards:', this.cards);
     }
 
+    // Capitalize first letter of each word
+    capitalizeWords(text) {
+        return text
+            .toLowerCase()
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    }
+
     // Initialize Event Listeners
     initializeEventListeners() {
         console.log('Initializing event listeners');
@@ -41,6 +50,14 @@ class SportsCardTracker {
             form.addEventListener('submit', (e) => {
                 console.log('Form submitted');
                 this.addCard(e);
+            });
+        }
+
+        // Capitalize card name as you type
+        const cardNameInput = document.getElementById('card-name');
+        if (cardNameInput) {
+            cardNameInput.addEventListener('blur', (e) => {
+                e.target.value = this.capitalizeWords(e.target.value);
             });
         }
 
