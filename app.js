@@ -9,6 +9,7 @@ class SportsCardTracker {
         this.initializeEventListeners();
         this.displayCards();
         this.updateStats();
+        console.log('App initialized');
     }
 
     // Local Storage Methods
@@ -16,22 +17,32 @@ class SportsCardTracker {
         const savedData = localStorage.getItem('sportsCards');
         if (savedData) {
             this.cards = JSON.parse(savedData);
+            console.log('Loaded cards:', this.cards);
         }
     }
 
     saveData() {
         localStorage.setItem('sportsCards', JSON.stringify(this.cards));
+        console.log('Saved cards:', this.cards);
     }
 
     // Initialize Event Listeners
     initializeEventListeners() {
+        console.log('Initializing event listeners');
+        
         // Tab switching
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => this.switchTab(e.target.dataset.tab));
         });
 
         // Add card form
-        document.getElementById('add-card-form').addEventListener('submit', (e) => this.addCard(e));
+        const form = document.getElementById('add-card-form');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                console.log('Form submitted');
+                this.addCard(e);
+            });
+        }
 
         // Filter cards
         document.getElementById('filter-status').addEventListener('change', (e) => {
@@ -42,10 +53,14 @@ class SportsCardTracker {
         // Sell modal
         const modal = document.getElementById('sell-modal');
         const closeBtn = document.querySelector('.close');
-        closeBtn.addEventListener('click', () => this.closeModal());
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) this.closeModal();
-        });
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => this.closeModal());
+        }
+        if (modal) {
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) this.closeModal();
+            });
+        }
 
         // Sell form
         document.getElementById('sell-form').addEventListener('submit', (e) => this.confirmSale(e));
@@ -73,11 +88,18 @@ class SportsCardTracker {
     // Add Card
     addCard(e) {
         e.preventDefault();
+        console.log('addCard called');
+
+        const cardName = document.getElementById('card-name').value;
+        const cardPrice = document.getElementById('card-price').value;
+
+        console.log('Card Name:', cardName);
+        console.log('Card Price:', cardPrice);
 
         const card = {
             id: Date.now(),
-            cardName: document.getElementById('player-name').value,
-            purchasePrice: parseFloat(document.getElementById('purchase-price').value),
+            cardName: cardName,
+            purchasePrice: parseFloat(cardPrice),
             status: 'owned',
             salePrice: null
         };
@@ -96,6 +118,7 @@ class SportsCardTracker {
 
     // Display Cards
     displayCards() {
+        console.log('displayCards called');
         const container = document.getElementById('cards-container');
         container.innerHTML = '';
 
@@ -229,3 +252,4 @@ class SportsCardTracker {
 
 // Initialize app
 const tracker = new SportsCardTracker();
+console.log('Tracker created');
