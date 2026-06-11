@@ -85,10 +85,7 @@ class SportsCardTracker {
 
         const card = {
             id: Date.now(),
-            playerName: document.getElementById('player-name').value,
-            year: document.getElementById('card-year').value,
-            set: document.getElementById('card-set').value,
-            condition: document.getElementById('card-condition').value,
+            cardName: document.getElementById('player-name').value,
             purchasePrice: parseFloat(document.getElementById('purchase-price').value),
             purchaseDate: document.getElementById('purchase-date').value,
             status: 'owned',
@@ -153,14 +150,9 @@ class SportsCardTracker {
 
             cardElement.innerHTML = `
                 <div class="card-header">
-                    <div class="card-title">${card.playerName}</div>
-                    <div class="card-subtitle">${card.year} ${card.set}</div>
+                    <div class="card-title">${card.cardName}</div>
                 </div>
                 <div class="card-details">
-                    <div class="detail-row">
-                        <span class="detail-label">Condition:</span>
-                        <span class="detail-value">${card.condition}</span>
-                    </div>
                     <div class="detail-row">
                         <span class="detail-label">Purchase Price:</span>
                         <span class="detail-value">$${card.purchasePrice.toFixed(2)}</span>
