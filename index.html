@@ -42,12 +42,17 @@
         <!-- My Cards Tab -->
         <div id="my-cards" class="tab-content">
             <h2>My Collection</h2>
-            <div class="filter-options">
-                <select id="filter-status">
-                    <option value="all">All Cards</option>
-                    <option value="owned">Owned</option>
-                    <option value="sold">Sold</option>
-                </select>
+            <div class="collection-controls">
+                <div class="search-box">
+                    <input type="text" id="search-cards" placeholder="🔍 Search cards...">
+                </div>
+                <div class="filter-options">
+                    <select id="filter-status">
+                        <option value="all">All Cards</option>
+                        <option value="owned">Owned</option>
+                        <option value="sold">Sold</option>
+                    </select>
+                </div>
             </div>
             <div id="cards-container" class="cards-container">
                 <p class="empty-state">No cards added yet. Start by adding your first card!</p>
@@ -101,6 +106,6 @@
         </div>
     </div>
 
-    <script src="app.js?v=3"></script>
+    <script src="app.js?v=4"></script>
 </body>
 </html>

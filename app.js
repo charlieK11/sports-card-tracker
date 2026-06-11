@@ -4,6 +4,7 @@ class SportsCardTracker {
     constructor() {
         this.cards = [];
         this.currentFilter = 'all';
+        this.currentSearch = '';
         this.currentCardForSale = null;
         this.loadData();
         this.initializeEventListeners();
@@ -59,6 +60,15 @@ class SportsCardTracker {
                 const cursorPos = e.target.selectionStart;
                 e.target.value = this.capitalizeWords(e.target.value);
                 e.target.setSelectionRange(cursorPos, cursorPos);
+            });
+        }
+
+        // Search cards
+        const searchInput = document.getElementById('search-cards');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.currentSearch = e.target.value.toLowerCase();
+                this.displayCards();
             });
         }
 
@@ -142,14 +152,22 @@ class SportsCardTracker {
 
         let filteredCards = this.cards;
 
+        // Apply status filter
         if (this.currentFilter === 'owned') {
-            filteredCards = this.cards.filter(card => card.status === 'owned');
+            filteredCards = filteredCards.filter(card => card.status === 'owned');
         } else if (this.currentFilter === 'sold') {
-            filteredCards = this.cards.filter(card => card.status === 'sold');
+            filteredCards = filteredCards.filter(card => card.status === 'sold');
+        }
+
+        // Apply search filter
+        if (this.currentSearch) {
+            filteredCards = filteredCards.filter(card => 
+                card.cardName.toLowerCase().includes(this.currentSearch)
+            );
         }
 
         if (filteredCards.length === 0) {
-            container.innerHTML = '<p class="empty-state">No cards in this category.</p>';
+            container.innerHTML = '<p class="empty-state">No cards found.</p>';
             return;
         }
 
