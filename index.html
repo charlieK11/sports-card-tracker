@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Card Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏀 Sports Card Tracker</h1>
+            <p>Track your card purchases and sales, calculate profits</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="add-card">Add Card</button>
+            <button class="tab-btn" data-tab="my-cards">My Collection</button>
+            <button class="tab-btn" data-tab="stats">Stats</button>
+        </div>
+
+        <!-- Add Card Tab -->
+        <div id="add-card" class="tab-content active">
+            <div class="form-container">
+                <h2>Add a New Card</h2>
+                <form id="add-card-form">
+                    <div class="form-group">
+                        <label for="player-name">Player Name *</label>
+                        <input type="text" id="player-name" required placeholder="e.g., LeBron James">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="card-year">Year *</label>
+                        <input type="number" id="card-year" required placeholder="e.g., 2023">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="card-set">Card Set *</label>
+                        <input type="text" id="card-set" required placeholder="e.g., Topps, Panini">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="card-condition">Condition</label>
+                        <select id="card-condition">
+                            <option value="Mint">Mint</option>
+                            <option value="Near Mint">Near Mint</option>
+                            <option value="Excellent">Excellent</option>
+                            <option value="Good">Good</option>
+                            <option value="Fair">Fair</option>
+                            <option value="Poor">Poor</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="purchase-price">Purchase Price ($) *</label>
+                        <input type="number" id="purchase-price" required placeholder="0.00" step="0.01" min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="purchase-date">Purchase Date *</label>
+                        <input type="date" id="purchase-date" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Card</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- My Cards Tab -->
+        <div id="my-cards" class="tab-content">
+            <h2>My Collection</h2>
+            <div class="filter-options">
+                <select id="filter-status">
+                    <option value="all">All Cards</option>
+                    <option value="owned">Owned</option>
+                    <option value="sold">Sold</option>
+                </select>
+            </div>
+            <div id="cards-container" class="cards-container">
+                <p class="empty-state">No cards added yet. Start by adding your first card!</p>
+            </div>
+        </div>
+
+        <!-- Stats Tab -->
+        <div id="stats" class="tab-content">
+            <h2>Collection Stats</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Cards</h3>
+                    <p id="stat-total-cards" class="stat-value">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Cards Owned</h3>
+                    <p id="stat-owned-cards" class="stat-value">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Cards Sold</h3>
+                    <p id="stat-sold-cards" class="stat-value">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Invested</h3>
+                    <p id="stat-total-invested" class="stat-value">$0.00</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Revenue</h3>
+                    <p id="stat-total-revenue" class="stat-value">$0.00</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Profit/Loss</h3>
+                    <p id="stat-total-profit" class="stat-value profit">$0.00</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sell Modal -->
+        <div id="sell-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Sell Card</h2>
+                <form id="sell-form">
+                    <div class="form-group">
+                        <label for="sell-price">Sale Price ($) *</label>
+                        <input type="number" id="sell-price" required placeholder="0.00" step="0.01" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="sell-date">Sale Date *</label>
+                        <input type="date" id="sell-date" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Confirm Sale</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
